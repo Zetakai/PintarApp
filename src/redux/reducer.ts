@@ -1,7 +1,8 @@
 
 const initialState = {
   isLoggedIn:false,
-  data:null
+  data:null,
+  showSplash:true
 };
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -15,6 +16,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+      };
+      case 'SPLASH':
+      return {
+        ...state,
+        showSplash: action.payload,
       };
 
     default:
