@@ -11,7 +11,7 @@ import {Typography} from '../../theme/Typography';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch, useSelector} from 'react-redux';
 import { BASE_API } from '../../api/base_url';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Lottie from 'lottie-react-native';
 
 export default function Login({navigation}) {
   const {
@@ -99,6 +99,13 @@ export default function Login({navigation}) {
           <Icon name="account-circle" size={30} color={'black'} />
         </View>
         <Spacer height={ms(20)} />
+        <View style={{width: ms(300), height: ms(300), alignSelf: 'center'}}>
+          <Lottie
+            source={require('../../assets/animations/login.json')}
+            autoPlay
+            loop
+          />
+        </View>
 
         <View style={{paddingHorizontal: ms(20)}}>
           <TextInput
