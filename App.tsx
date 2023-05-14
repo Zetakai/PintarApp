@@ -1,118 +1,74 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import React from 'react';
-import type {PropsWithChildren} from 'react';
+import React, {useEffect} from 'react';
+import AppRoutes from './src/navigation/index';
+import {configureFonts, Provider as PaperProvider} from 'react-native-paper';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  initialWindowMetrics,
+  SafeAreaProvider,
+} from 'react-native-safe-area-context';
+import {Provider as StoreProvider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {Persistor, Store} from './src/redux/store';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+const App = () => {
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
-
-function App(): JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+  const theme = {
+    colors: {
+      primary: 'rgb(98, 98, 0)',
+      onPrimary: 'rgb(255, 255, 255)',
+      primaryContainer: 'rgb(234, 234, 0)',
+      onPrimaryContainer: 'rgb(29, 29, 0)',
+      secondary: 'rgb(96, 96, 67)',
+      onSecondary: 'rgb(255, 255, 255)',
+      secondaryContainer: 'rgb(231, 228, 191)',
+      onSecondaryContainer: 'rgb(29, 29, 6)',
+      tertiary: 'rgb(61, 102, 87)',
+      onTertiary: 'rgb(255, 255, 255)',
+      tertiaryContainer: 'rgb(191, 236, 216)',
+      onTertiaryContainer: 'rgb(0, 33, 23)',
+      error: 'rgb(186, 26, 26)',
+      onError: 'rgb(255, 255, 255)',
+      errorContainer: 'rgb(255, 218, 214)',
+      onErrorContainer: 'rgb(65, 0, 2)',
+      background: 'rgb(255, 251, 255)',
+      onBackground: 'rgb(28, 28, 23)',
+      surface: 'rgb(255, 251, 255)',
+      onSurface: 'rgb(28, 28, 23)',
+      surfaceVariant: 'rgb(230, 227, 209)',
+      onSurfaceVariant: 'rgb(72, 71, 58)',
+      outline: 'rgb(121, 120, 105)',
+      outlineVariant: 'rgb(202, 199, 182)',
+      shadow: 'rgb(0, 0, 0)',
+      scrim: 'rgb(0, 0, 0)',
+      inverseSurface: 'rgb(49, 49, 43)',
+      inverseOnSurface: 'rgb(244, 240, 232)',
+      inversePrimary: 'rgb(205, 205, 0)',
+      elevation: {
+        level0: 'transparent',
+        level1: 'rgb(247, 243, 242)',
+        level2: 'rgb(242, 239, 235)',
+        level3: 'rgb(238, 234, 227)',
+        level4: 'rgb(236, 233, 224)',
+        level5: 'rgb(233, 230, 219)',
+      },
+      surfaceDisabled: 'rgba(28, 28, 23, 0.12)',
+      onSurfaceDisabled: 'rgba(28, 28, 23, 0.38)',
+      backdrop: 'rgba(49, 49, 37, 0.4)',
+    },roundness:2
   };
-
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <StoreProvider store={Store}>
+      <PersistGate loading={null} persistor={Persistor}>
+        <PaperProvider theme={theme}>
+          <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+            <GestureHandlerRootView style={{flex: 1}}>
+              <AppRoutes />
+            </GestureHandlerRootView>
+          </SafeAreaProvider>
+        </PaperProvider>
+      </PersistGate>
+    </StoreProvider>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
