@@ -11,14 +11,12 @@ export default function MainTabViewModel() {
   const data = useSelector(state => state.data);
   const d = useDispatch();
 
-  const fetchFaqData = async isNext => {
-    // console.log("data")
-    // d({type: 'USER-AUTH', payload: false});
-    //   d({type: 'LOGIN-AUTH', payload: null});
+  const fetchFaqData = async (isNext,firstPage) => {
     try {
       setLoading(true);
+      firstPage&&setPage(1)
       const response = await fetch(
-        `${BASE_API}/api/v1/superadmin/faq?page=${1}&rows=10`,
+        `${BASE_API}/api/v1/superadmin/faq?page=${page}&rows=10`,
         {
           headers: {
             Authorization: `Bearer ${data.access_token}`,
@@ -26,10 +24,8 @@ export default function MainTabViewModel() {
         },
       );
       const json = await response.json();
-      faqData.toString() !== json.data.toString() &&
         setFaqData([...faqData, ...json.data]);
       isNext &&
-        faqData.toString() !== json.data.toString() &&
         setPage(page + 1);
     } catch (error) {
       setError(error.message);

@@ -31,7 +31,7 @@ export default function Profile() {
   const data=useSelector(state=>state.data)
   const {handleLogout, visible, showModal, hideModal} = useVM();
   const menu = [
-    {icon: 'cart-variant', title: 'My Cart'},
+    {icon: 'post-outline', title: 'My Posts'},
     {icon: 'message-text-outline', title: 'Messages'},
     {icon: 'cards-heart-outline', title: 'Favourites'},
     {icon: 'cog-outline', title: 'Settings'},

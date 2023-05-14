@@ -29,9 +29,13 @@ export default function MainTab({navigation}) {
 
   useFocusEffect(
     useCallback(() => {
-      fetchFaqData();
+      fetchFaqData(false,true);
     }, []),
   );
+  useEffect(() => {
+    setOnEndReached(false)
+  }, [])
+  
   const callOnEndReached = ({distanceFromEnd}) => {
     if (!onEndReached) {
       fetchFaqData(true);
