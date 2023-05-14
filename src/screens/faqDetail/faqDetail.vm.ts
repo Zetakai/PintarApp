@@ -38,7 +38,6 @@ export default function FaqDetailViewModel() {
             });
 
             const json = await response.json();
-            console.log(id, json.data.pertanyaan)
             setFaqData(json.data);
             setPertanyaan(json.data.pertanyaan);
             setJawaban(json.data.jawaban);
@@ -62,7 +61,6 @@ export default function FaqDetailViewModel() {
                 body: form
             });
             const json = await response.json()
-            console.log(json)
             navigation.goBack()
         } catch (error) {
             console.error(error);
@@ -82,7 +80,6 @@ export default function FaqDetailViewModel() {
                 body: form
             });
             const json = await response.json()
-            console.log(json)
             navigation.goBack()
         } catch (error) {
             console.error(error);
@@ -98,7 +95,6 @@ export default function FaqDetailViewModel() {
                 }
             });
             const json = await response.json()
-            console.log(json)
             navigation.goBack()
         } catch (error) {
             console.error(error);

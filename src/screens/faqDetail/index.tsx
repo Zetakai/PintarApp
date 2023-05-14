@@ -29,7 +29,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableOpacity} from 'react-native';
 import {useSelector} from 'react-redux';
 
-export default function FaqDetail({navigation,route}) {
+export default function FaqDetail({navigation, route}) {
   const theme = useTheme();
   const data = useSelector(state => state.data);
   const {
@@ -55,10 +55,10 @@ export default function FaqDetail({navigation,route}) {
     fetchDetail,
     updateFaq,
     deleteFaq,
-    createFaq
+    createFaq,
   } = useVM();
   useEffect(() => {
-    !route.params.isCreating&&fetchDetail(route.params.id);
+    !route.params.isCreating && fetchDetail(route.params.id);
   }, []);
 
   const menu = [
@@ -113,7 +113,7 @@ export default function FaqDetail({navigation,route}) {
             </Text>
           </Pressable>
           <Button
-            onPress={()=>deleteFaq(route.params.id)}
+            onPress={() => deleteFaq(route.params.id)}
             style={{width: '50%', minWidth: 100}}
             mode="contained-tonal">
             Delete
@@ -140,16 +140,26 @@ export default function FaqDetail({navigation,route}) {
         source={require('../../assets/images/background3.png')}
       />
       <Appbar.Header statusBarHeight={0} mode="center-aligned" elevated>
-      <Appbar.BackAction onPress={() => {navigation.goBack()}} />
-        <Appbar.Content title={route.params.isCreating?"Create Faq":"Faq Detail"} />
-        <Menu
+        <Appbar.BackAction
+          onPress={() => {
+            navigation.goBack();
+          }}
+        />
+        <Appbar.Content
+          title={route.params.isCreating ? 'Create Faq' : 'Faq Detail'}
+        />
+        {!route.params.isCreating&&<Menu
           style={{marginTop: 40}}
           visible={visible}
           onDismiss={closeMenu}
           anchor={<Appbar.Action icon="dots-vertical" onPress={openMenu} />}>
-          {updating?<Menu.Item onPress={finishUpdating} title="Cancel Updating" />:<Menu.Item onPress={startUpdating} title="Update Faq" />}
+          {updating ? (
+            <Menu.Item onPress={finishUpdating} title="Cancel Updating" />
+          ) : (
+            <Menu.Item onPress={startUpdating} title="Update Faq" />
+          )}
           <Menu.Item onPress={showModal} title="Delete Faq" />
-        </Menu>
+        </Menu>}
       </Appbar.Header>
       <ScrollView
         contentContainerStyle={{
@@ -160,11 +170,10 @@ export default function FaqDetail({navigation,route}) {
         <Text style={[Typography.h1, {color: 'black', fontWeight: 'bold'}]}>
           Pertanyaan :
         </Text>
-        {updating||route.params.isCreating ? (
+        {(updating || route.params.isCreating) ? (
           <TextInput
-          mode='outlined'
+            mode="outlined"
             multiline
-            
             value={pertanyaan}
             onChangeText={onChangePertanyaan}
           />
@@ -174,25 +183,38 @@ export default function FaqDetail({navigation,route}) {
           </Text>
         )}
         <Spacer />
-        
-          <Text style={[Typography.h1, {color: 'black', fontWeight: 'bold'}]}>
-            Jawaban :
-          </Text>
-        
-        {updating||route.params.isCreating ? (
+
+        <Text style={[Typography.h1, {color: 'black', fontWeight: 'bold'}]}>
+          Jawaban :
+        </Text>
+
+        {(updating || route.params.isCreating) ? (
           <TextInput
-          mode='outlined'
+            mode="outlined"
             multiline
-            
             value={jawaban}
             onChangeText={onChangeJawaban}
           />
-        ) : (<Text style={[Typography.h2, {color: 'black'}]}>
-          {faqData?.jawaban}
-        </Text>)}
-        {updating||route.params.isCreating&&<Button style={{marginTop:ms(20)}} icon="post" mode="contained-tonal" onPress={()=>{route.params.isCreating?createFaq():updateFaq(route.params.id)}}>
-    {route.params.isCreating?"Post Faq":"Post Update"}
-  </Button>}
+        ) : (
+          <Text style={[Typography.h2, {color: 'black'}]}>
+            {faqData?.jawaban}
+          </Text>
+        )}
+
+        {(updating ||
+          route.params.isCreating)&& (
+            <Button
+              style={{marginTop: ms(20)}}
+              icon="post"
+              mode="contained-tonal"
+              onPress={() => {
+                route.params.isCreating
+                  ? createFaq()
+                  : updateFaq(route.params.id);
+              }}>
+              {route.params.isCreating ? 'Post Faq' : 'Post Update'}
+            </Button>
+          )}
       </ScrollView>
       <RenderModal />
     </SafeAreaView>
