@@ -15,6 +15,7 @@ export default function MainTabViewModel() {
     try {
       setLoading(true);
       firstPage&&setPage(1)
+      firstPage&&setFaqData([])
       const response = await fetch(
         `${BASE_API}/api/v1/superadmin/faq?page=${page}&rows=10`,
         {
