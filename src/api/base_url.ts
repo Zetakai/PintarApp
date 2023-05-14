@@ -1,0 +1,1 @@
+export const BASE_API="https://be.lms-staging.madrasahkemenag.com"
